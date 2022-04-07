@@ -1,0 +1,7 @@
+*/fib
+*/fib_*
+*/fib.wasm
+*/*.disassembly.txt
+*/*.asm
+riscv-c/riscv-gnu-toolchain
+*.zip

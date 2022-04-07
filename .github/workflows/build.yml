@@ -1,0 +1,60 @@
+name: Build disassembled files
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set Swap Space
+      uses: pierotofy/set-swap-space@v1.0
+      with:
+        swap-size-gb: 10
+
+    - name: Cache RISC-V toolchain
+      uses: actions/cache@v3
+      with:
+        path: /opt/riscv
+        key: riscv-build-tools
+
+    - name: Cache Wasm toolchain
+      uses: actions/cache@v3
+      with:
+        path: /opt/emsdk
+        key: emscripten-build-tools
+
+    - name: Cache Z80 toolchain
+      uses: actions/cache@v3
+      with:
+        path: /opt/llvm-project
+        key: z80-tools-llvm-v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get upgrade
+        make dependencies
+
+    - name: Generate disassembled files
+      run: make
+
+    - name: Generate tag name
+      run: echo "TAG_NAME=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+    - name: Upload release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: "*/*.disassembly.txt\nresults.zip"
+        name: "Automated generation"
+        fail_on_unmatched_files: true
+        tag_name: ${{ env.TAG_NAME }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
