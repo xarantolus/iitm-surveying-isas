@@ -49,7 +49,7 @@ fib_minimal_optimized: ../programs/fib.c
 
 .PHONY:
 dependencies:
-	sudo apt-get install gcc gdb-multiarch
+	sudo apt-get install -y gcc gdb-multiarch
 
 .PHONY:
 clean:

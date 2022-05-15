@@ -10,7 +10,7 @@ else
     echo "Installing LLVM for Z80"
     sudo rm -rf "llvm-project" || true
 
-    sudo apt-get install gcc cmake clang build-essential libxml2 lld-10 z80dasm valgrind
+    sudo apt-get install -y gcc cmake clang build-essential libxml2 lld-10 z80dasm valgrind
 
     sudo git clone https://github.com/gt-retro-computing/llvm-project
 
