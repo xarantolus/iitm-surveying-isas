@@ -13,6 +13,7 @@ The following `make` commands assume that you're in the root of this repository.
     make dependencies
 
 * Install all required dependencies for all architectures. This might only work on Ubuntu systems (tested on Ubuntu 20.04.4 LTS x86_64)
+* Make sure you have enough memory available, as otherwise compilation will get terminated. 8GB might not be enough
 * Can take around 6 hours
 
 #### Create disassembled files
